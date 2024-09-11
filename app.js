@@ -133,6 +133,37 @@ function adjustFrontAngles() {
     ];
 }
 
+function exportCroppedImage() {
+    const canvas = document.getElementById('projectionCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    // Define the cropping region
+    const cropX = 50; // X-coordinate of the cropping rectangle
+    const cropY = 50; // Y-coordinate of the cropping rectangle
+    const cropWidth = 300; // Width of the cropping rectangle
+    const cropHeight = 300; // Height of the cropping rectangle
+
+    // Create a temporary canvas to hold the cropped image
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = cropWidth;
+    tempCanvas.height = cropHeight;
+    const tempCtx = tempCanvas.getContext('2d');
+
+    // Draw the cropped region onto the temporary canvas
+    tempCtx.drawImage(canvas, cropX, cropY, cropWidth, cropHeight, 0, 0, cropWidth, cropHeight);
+
+    // Convert the temporary canvas to an image
+    const dataURL = tempCanvas.toDataURL('image/png');
+
+    // Create a link element and trigger download
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'newman_projection.png';
+    link.click();
+}
+
+
+
 // Initialize with default drawing
 drawProjection();
 
