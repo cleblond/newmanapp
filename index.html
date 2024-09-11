@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newman Projection Builder</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Newman Projection Builder</h1>
+    <div class="container">
+        <canvas id="projectionCanvas" width="400" height="400"></canvas>
+
+        <div class="controls">
+            <h2>Substituents</h2>
+            <label for="front1">Front Substituent 1:</label>
+            <input type="text" id="front1" value="H">
+            <label for="front2">Front Substituent 2:</label>
+            <input type="text" id="front2" value="CH3">
+            <label for="front3">Front Substituent 3:</label>
+            <input type="text" id="front3" value="OH">
+            <br>
+            <label for="back1">Back Substituent 1:</label>
+            <input type="text" id="back1" value="Cl">
+            <label for="back2">Back Substituent 2:</label>
+            <input type="text" id="back2" value="H">
+            <label for="back3">Back Substituent 3:</label>
+            <input type="text" id="back3" value="Br">
+            <br>
+            <label for="conformation">Conformation:</label>
+            <select id="conformation">
+                <option value="staggered">Staggered</option>
+                <option value="eclipsed">Eclipsed</option>
+            </select>
+            <br><br>
+            <button onclick="drawProjection()">Draw Projection</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

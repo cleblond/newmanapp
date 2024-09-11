@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+canvas {
+    border: 1px solid #ccc;
+}
+
+.controls {
+    margin-left: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
