@@ -5,34 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Newman Projection Builder</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="huebee.min.css">
+    <script src="huebee.pkgd.min.js"></script>
 </head>
 <body>
     <h1>Newman Projection Builder</h1>
     <div class="container">
         <canvas id="projectionCanvas" width="400" height="400"></canvas>
+        
+        
+
+        
 
         <div class="controls">
+        
+            <h3>Subscript Characters</h3>
+            <table id="unicodeTable">
+                <tr>
+                    <td data-char="₀">₀</td>
+                    <td data-char="₁">₁</td>
+                    <td data-char="₂">₂</td>
+                    <td data-char="₃">₃</td>
+                    <td data-char="₄">₄</td>
+                    <td data-char="₅">₅</td>
+                    <td data-char="₆">₆</td>
+                    <td data-char="₇">₇</td>
+                    <td data-char="₈">₈</td>
+                    <td data-char="₉">₉</td>
+                </tr>
+                <tr>
+                    <td colspan="10">Click on a subscript to insert it into the active input field.</td>
+                </tr>
+            </table>
+        
+        
+        
             <h2>Substituents</h2>
             <label for="front1">Front Substituent 1:</label>
-            <input type="text" id="front1" value="H">
+            <input type="text" id="front1" value="H"><input class="color-input" value="#000" id="f1color"/>
             <label for="front2">Front Substituent 2:</label>
-            <input type="text" id="front2" value="CH3">
+            <input type="text" id="front2" value="H"><input class="color-input" value="#000" id="f2color"/>
             <label for="front3">Front Substituent 3:</label>
-            <input type="text" id="front3" value="OH">
+            <input type="text" id="front3" value="H"><input class="color-input" value="#000" id="f3color"/>
             <br>
             <label for="back1">Back Substituent 1:</label>
-            <input type="text" id="back1" value="Cl">
+            <input type="text" id="back1" value="H"><input class="color-input" value="#000" id="b1color"/>
             <label for="back2">Back Substituent 2:</label>
-            <input type="text" id="back2" value="H">
+            <input type="text" id="back2" value="H"><input class="color-input" value="#000" id="b2color"/>
             <label for="back3">Back Substituent 3:</label>
-            <input type="text" id="back3" value="Br">
+            <input type="text" id="back3" value="H"><input class="color-input" value="#000" id="b3color"/>
             <br>
             <label for="conformation">Conformation:</label>
             <select id="conformation">
                 <option value="staggered">Staggered</option>
                 <option value="eclipsed">Eclipsed</option>
             </select>
-            <br><br>
+            <br>
+            <input type="number" id="eclipsed_offset" min="0" max="30" value = "10" />
+            <br>
             <button onclick="drawProjection()">Draw Projection</button>
                 <button onclick="exportCroppedImage()">Export Cropped Image</button>
         </div>
