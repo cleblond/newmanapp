@@ -34,8 +34,8 @@ function drawProjection() {
     substituents['front'][2].label = document.getElementById('front3').value;
     
     substituents['back'][0].label = document.getElementById('back1').value;
-    substituents['back'][0].label = document.getElementById('back2').value;
-    substituents['back'][0].label = document.getElementById('back3').value;
+    substituents['back'][1].label = document.getElementById('back2').value;
+    substituents['back'][2].label = document.getElementById('back3').value;
 
     
     eclipsed_offset = document.getElementById('eclipsed_offset').value;
@@ -59,6 +59,7 @@ function drawProjection() {
     ctx.beginPath();
     ctx.arc(centerX, centerY, circleRadius, 0, 2 * Math.PI);
     //ctx.setLineDash([5, 5]); // Dashed circle
+    ctx.lineWidth = 4;
     ctx.stroke();
     ctx.setLineDash([]); // Reset line dash for other drawings
 
@@ -83,8 +84,8 @@ function drawBonds(ctx, cx, cy, bondLength, substituents, rotation, isFront = fa
     const angles = isBack ? adjustBackAngles(rotation) : (isFront ? adjustFrontAngles() : baseAngles);
 
     // Set line style
-    ctx.setLineDash(isDashed ? [5, 5] : []); // Dashed if isDashed is true
-
+    //ctx.setLineDash(isDashed ? [5, 5] : []); // Dashed if isDashed is true
+    ctx.lineWidth = 4;
     // Set font size and text alignment
     ctx.font = `${fontSize} Arial`;
     ctx.textAlign = 'center';
