@@ -19,6 +19,15 @@
 
         <div class="controls">
         
+        
+            <label for="conformation">Conformation:</label>
+            <select id="conformation">
+                <option value="staggered">Staggered</option>
+                <option value="eclipsed">Eclipsed</option>
+            </select>
+            <br>
+            <input type="number" id="eclipsed_offset" min="0" max="30" value = "10" />
+            <br>
             <h3>Subscript Characters</h3>
             <table id="unicodeTable">
                 <tr>
@@ -27,6 +36,8 @@
                     <td data-char="₂">₂</td>
                     <td data-char="₃">₃</td>
                     <td data-char="₄">₄</td>
+                </tr>
+                <tr>
                     <td data-char="₅">₅</td>
                     <td data-char="₆">₆</td>
                     <td data-char="₇">₇</td>
@@ -55,16 +66,9 @@
             <label for="back3">Back Substituent 3:</label>
             <input type="text" id="back3" value="H"><input class="color-input" value="#000" id="b3color"/>
             <br>
-            <label for="conformation">Conformation:</label>
-            <select id="conformation">
-                <option value="staggered">Staggered</option>
-                <option value="eclipsed">Eclipsed</option>
-            </select>
-            <br>
-            <input type="number" id="eclipsed_offset" min="0" max="30" value = "10" />
-            <br>
+
             <button onclick="drawProjection()">Draw Projection</button>
-                <button onclick="exportCroppedImage()">Export Cropped Image</button>
+            <button onclick="exportCroppedImage()">Export Cropped Image</button>
         </div>
     </div>
 

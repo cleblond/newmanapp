@@ -310,6 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cell.addEventListener('click', () => {
             const char = cell.getAttribute('data-char');
             insertIntoLastFocusedInput(char);
+            drawProjection();
         });
     });
 });
