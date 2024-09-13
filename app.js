@@ -38,18 +38,18 @@ function drawProjection() {
     substituents['back'][0].label = document.getElementById('back3').value;
 
     
-    
+    eclipsed_offset = document.getElementById('eclipsed_offset').value;
     const conformation = document.getElementById('conformation').value;
-
+     
     // Set rotation for staggered (60 degrees) or eclipsed (0 degrees)
-    const rotation = conformation === 'staggered' ? 60 : 10;
+    const rotation = conformation === 'staggered' ? 60 : eclipsed_offset;
 
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Set center of projection
-    const centerX = 200;
-    const centerY = 200;
+    const centerX = 150;
+    const centerY = 150;
     const bondLength = 60;
     const substituentOffset = 10; // Offset to position substituents closer to the end
     const fontSize = '20px'; // Set font size
@@ -226,6 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const conformation = document.getElementById('conformation');
 
     const colors = document.querySelectorAll('.color-input');
+    const eclipsed_input = document.getElementById('eclipsed_offset');
     // Track which input field was last focused
     //inputFields.forEach(input => {
         conformation.addEventListener('change', () => {
@@ -276,7 +277,9 @@ document.addEventListener('DOMContentLoaded', () => {
            
         });
     
-    
+    eclipsed_input.addEventListener('change', () => {
+            drawProjection();
+    });
 
     //let hueb = new Huebee( colors, {});
 
