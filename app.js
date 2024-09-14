@@ -59,7 +59,7 @@ function drawProjection() {
     ctx.beginPath();
     ctx.arc(centerX, centerY, circleRadius, 0, 2 * Math.PI);
     //ctx.setLineDash([5, 5]); // Dashed circle
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 3;
     ctx.stroke();
     ctx.setLineDash([]); // Reset line dash for other drawings
 
@@ -85,7 +85,7 @@ function drawBonds(ctx, cx, cy, bondLength, substituents, rotation, isFront = fa
 
     // Set line style
     //ctx.setLineDash(isDashed ? [5, 5] : []); // Dashed if isDashed is true
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 3;
     // Set font size and text alignment
     ctx.font = `${fontSize} Arial`;
     ctx.textAlign = 'center';
@@ -296,8 +296,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Track which input field was last focused
     inputFields.forEach(input => {
-        input.addEventListener('input', () => {
-            drawProjection();
+        input.addEventListener('input', (e) => {
+        if (Number.isInteger(parseInt(e.data))) {
+        const position = e.target.selectionStart - 1; // Subtract 1 to get the position of the last character added
+        const subscripts = ["\u2080", "\u2081", "\u2082", "\u2083", "\u2084", "\u2085", "\u2086", "\u2087", "\u2088", "\u2089"];
+
+        let str = document.getElementById(e.target.id).value;
+        let newStr = str.substring(0, position) + subscripts[e.data] + str.substring(position + 1);
+        
+        document.getElementById(e.target.id).value = newStr;
+        }
+        
+        drawProjection();
         });
     });
     
