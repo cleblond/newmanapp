@@ -25,9 +25,7 @@ let eclipsed_offset = document.getElementById('eclipsed_offset').value;
 
 
 function drawProjection() {
-    //const canvas = document.getElementById('projectionCanvas');
     const ctx = canvas.getContext('2d');
-        
         
     substituents['front'][0].label = document.getElementById('front1').value;
     substituents['front'][1].label = document.getElementById('front2').value;
@@ -73,6 +71,7 @@ function drawProjection() {
 
     // Draw front bonds and substituents with solid lines
     drawBonds(ctx, centerX, centerY, bondLength, substituents, 0, true, false, false, substituentOffset, fontSize, circleRadius, false, 'front');
+    
 }
 
 // Function to draw bonds and place substituents
@@ -84,9 +83,7 @@ function drawBonds(ctx, cx, cy, bondLength, substituents, rotation, isFront = fa
     const angles = isBack ? adjustBackAngles(rotation) : (isFront ? adjustFrontAngles() : baseAngles);
 
     // Set line style
-    //ctx.setLineDash(isDashed ? [5, 5] : []); // Dashed if isDashed is true
     ctx.lineWidth = 3;
-    // Set font size and text alignment
     ctx.font = `${fontSize} Arial`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
@@ -114,27 +111,31 @@ function drawBonds(ctx, cx, cy, bondLength, substituents, rotation, isFront = fa
         //ctx.fillText(substituents[i], labelX, labelY);
         
         
-                // Update substituent positions if it's not being dragged
-                
-        //console.log("draw Bonds");
-        //console.log(substituents);
+        // Update substituent positions if it's not being dragged
         if (!substituents[positionKey][i].dragging && !substituents[positionKey][i].dragged) {
             substituents[positionKey][i].x = cx + (bondLength + substituentOffset) * Math.cos(angle);
             substituents[positionKey][i].y = cy + (bondLength + substituentOffset) * Math.sin(angle);
         }
         
-        //if (!substituents[positionKey][i].dragged && !substituents[positionKey][i].dragged) {
-        //    substituents[positionKey][i].x = cx + (bondLength + substituentOffset) * Math.cos(angle);
-        //    substituents[positionKey][i].y = cy + (bondLength + substituentOffset) * Math.sin(angle);
-        //}
-        
-        
-        
         ctx.fillStyle = substituents[positionKey][i].color; 
-        console.log(substituents[positionKey][i].color);
         
         // Draw substituent at updated position
-        ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x, substituents[positionKey][i].y);
+        //ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x, substituents[positionKey][i].y);
+        
+        if (i==0 || i==1) {ctx.textAlign = 'left'; ctx.textBaseline = 'middle'};
+        if (i==2) {ctx.textAlign = 'right'; ctx.textBaseline = 'middle'};
+        
+        if (i==0) {
+             ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x-7, substituents[positionKey][i].y);         
+        } else if (i==1) {
+            let fudge = 0;
+            if (positionKey == "back") {fudge = 4}
+            ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x-7, substituents[positionKey][i].y+fudge);    
+        
+        } else if (i==2) {
+            ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x+7, substituents[positionKey][i].y);        
+        }
+        
         
         
         
@@ -191,7 +192,6 @@ function adjustFrontAngles() {
 }
 
 function exportCroppedImage() {
-    //const canvas = document.getElementById('projectionCanvas');
     const ctx = canvas.getContext('2d');
     
     // Define the cropping region
@@ -228,35 +228,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const colors = document.querySelectorAll('.color-input');
     const eclipsed_input = document.getElementById('eclipsed_offset');
-    // Track which input field was last focused
-    //inputFields.forEach(input => {
+
         conformation.addEventListener('change', () => {
-            //lastFocusedInput = input;
             drawProjection();
         });
-    //});
-    
-    
-    //var inputs = document.querySelectorAll('.color-input');
+
         colors.forEach(function(input) {
            let hueb = new Huebee(input, {
+             saturations: 1,
              setBGColor: true,
              setText: true,
-             inputId: input.id
+             inputId: input.id,
+             shades: 3,
+             hues: 1
            });
-           
-           //let id = input.id;
-           //console.log(hueb);
-           
-            
            
             hueb.on( 'change', function(color, hue, sat, lum ) {
               
               let labelid = document.getElementById(hueb.anchor.id).previousSibling.id;
-              //console.log(front2);
               
               let subid = labelid.slice(-1);
-              console.log(subid);
                             
               if (labelid.substring(0, 1) == "f") {
               
@@ -268,10 +259,6 @@ document.addEventListener('DOMContentLoaded', () => {
               }
               drawProjection();
               
-              
-              
-              
-              
               hueb.close();
             })
            
@@ -281,11 +268,6 @@ document.addEventListener('DOMContentLoaded', () => {
     eclipsed_input.addEventListener('change', () => {
             drawProjection();
     });
-
-    //let hueb = new Huebee( colors, {});
-
-
-
 
     // Track which input field was last focused
     inputFields.forEach(input => {
@@ -356,15 +338,7 @@ canvas.addEventListener('mousemove', (e) => {
 });
 
 canvas.addEventListener('mouseup', () => {
-    //console.log(draggingSubstituent);
     if (draggingSubstituent) {
-    
-        //console.log(draggingSubstituent);
-        //substituents[draggingSubstituent.positionKey][draggingSubstituent.index].x = draggingSubstituent.x;
-        //substituents[draggingSubstituent.positionKey][draggingSubstituent.index].y = draggingSubstituent.y;  
-        
-        //console.log(substituents);
-        
         draggingSubstituent.dragging = false;
         draggingSubstituent = null;
     }
@@ -389,7 +363,6 @@ function getClickedSubstituent(x, y) {
             const height = 16; // Font size
             if (x >= sub.x - width / 2 && x <= sub.x + width / 2 &&
                 y >= sub.y - height / 2 && y <= sub.y + height / 2) {
-                //console.log(sub);
                 sub.positionKey = positionKey;
                 sub.index = i;
                 return sub;
@@ -422,11 +395,6 @@ function insertIntoLastFocusedInput(char) {
         alert('Please click on an input field before selecting a subscript.');
     }
 }
-
-
-
-
-
 
 // Initialize with default drawing
 drawProjection();
