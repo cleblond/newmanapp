@@ -37,7 +37,8 @@ function drawProjection() {
 
     
     eclipsed_offset = document.getElementById('eclipsed_offset').value;
-    const conformation = document.getElementById('conformation').value;
+    //const conformation = document.getElementById('conformation').value;
+    const conformation = document.querySelector('input[name="conformation"]:checked').value;
      
     // Set rotation for staggered (60 degrees) or eclipsed (0 degrees)
     const rotation = conformation === 'staggered' ? 60 : eclipsed_offset;
@@ -224,14 +225,17 @@ function exportCroppedImage() {
 document.addEventListener('DOMContentLoaded', () => {
     // Get all input fields
     const inputFields = document.querySelectorAll('input[type="text"]');
-    const conformation = document.getElementById('conformation');
-
+    const confinputs = document.querySelectorAll('input[name="conformation"]');
+console.log(document.querySelector('input[name="conformation"]:checked').value);
     const colors = document.querySelectorAll('.color-input');
     const eclipsed_input = document.getElementById('eclipsed_offset');
 
-        conformation.addEventListener('change', () => {
+    confinputs.forEach(function(input) {
+        input.addEventListener('change', () => {
+            console.log("Change");
             drawProjection();
         });
+    });
 
         colors.forEach(function(input) {
            let hueb = new Huebee(input, {
@@ -239,8 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
              setBGColor: true,
              setText: true,
              inputId: input.id,
-             shades: 3,
-             hues: 1
+             shades: 4,
+             hues: 6
            });
            
             hueb.on( 'change', function(color, hue, sat, lum ) {
