@@ -5,6 +5,11 @@ body {
 
 .color-input {
 width: 5em;
+text-align: center;
+}
+
+input[type=text] {
+    width: 5em;
 }
 
 
