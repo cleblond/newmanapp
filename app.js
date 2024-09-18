@@ -155,8 +155,6 @@ function drawBonds(ctx, cx, cy, bondLength, substituents, rotation, isFront = fa
     // Define base angles for 120-degree separation
     const baseAngles = [0, 120, 240].map(angle => angle * Math.PI / 180);
 
-    console.log(rotation);
-    console.log(rotated);
 
     // Adjust angles based on whether they are front or back bonds
     const angles = isBack ? adjustBackAngles(rotation) : (isFront ? adjustFrontAngles() : baseAngles);
@@ -358,14 +356,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     eclipsed_input.addEventListener('change', () => {
-            //conformation = document.querySelector('input[name="conformation"]:checked').value;
-            
-	    //rotation = conformation === 'staggered' ? 60 : eclipsed_offset;
-	    
 	    if (conformation == "eclipsed") {
 		    eclipsed_offset = Number(document.getElementById('eclipsed_offset').value);
 		    rotation = eclipsed_offset;
-		    console.log(rotation);
+		    //console.log(rotation);
 		    drawProjection();
             }
     });
@@ -459,14 +453,10 @@ function rotate120() {
 
         rotated = rotated + 1;
         conformation = document.querySelector('input[name="conformation"]:checked').value;
-        console.log(conformation);
-        console.log(rotation);
-	//rotation = conformation === 'staggered' ? 60 : eclipsed_offset;
 	
 	function isEven(n) {
    		return n % 2 == 0;
 	}
-	
 	
 	if (conformation == 'staggered') {
 	
@@ -474,9 +464,6 @@ function rotate120() {
 		if (isEven(rotation/60)) {
 			rotation = rotated*60 + eclipsed_offset;
 		}
-	
-	
-	//console.log(rotation);
 	} else {
 	
                 rotation = rotated*60;
@@ -485,13 +472,8 @@ function rotate120() {
 		} else {
 		        rotation = rotated*60;
 		}
-	        //rotation = -rotated*60 - eclipsed_offset;
 	        	
 	}
-	console.log(rotated);
-	console.log(rotation);
-	
-        //drawProjection();
 
 	drawProjection();
 
