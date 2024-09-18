@@ -20,8 +20,11 @@ let substituents = {
 };
 
 
-let eclipsed_offset = document.getElementById('eclipsed_offset').value;
+let eclipsed_offset = Number(document.getElementById('eclipsed_offset').value);
 
+let conformation = document.querySelector('input[name="conformation"]:checked').value;
+let rotation = conformation === 'staggered' ? 60 : eclipsed_offset;
+let rotated = conformation === 'staggered' ? 1 : 0;
 
 
 function drawProjection() {
@@ -35,14 +38,6 @@ function drawProjection() {
     substituents['back'][1].label = document.getElementById('back2').value;
     substituents['back'][2].label = document.getElementById('back3').value;
 
-    
-    eclipsed_offset = document.getElementById('eclipsed_offset').value;
-    //const conformation = document.getElementById('conformation').value;
-    const conformation = document.querySelector('input[name="conformation"]:checked').value;
-     
-    // Set rotation for staggered (60 degrees) or eclipsed (0 degrees)
-    const rotation = conformation === 'staggered' ? 60 : eclipsed_offset;
-
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -50,7 +45,7 @@ function drawProjection() {
     const centerX = 150;
     const centerY = 150;
     const bondLength = 60;
-    const substituentOffset = 10; // Offset to position substituents closer to the end
+    const substituentOffset = 5; // Offset to position substituents closer to the end
     const fontSize = '20px'; // Set font size
     const circleRadius = 40;
 
@@ -78,70 +73,80 @@ function drawProjection() {
 
 function calcTextAlign(x,y) {
     //1st quad
-    if (Math.round(x) == 0 && y > 150) {
-        console.log("Here");
+    
+    //console.log(x,y);
+    
+    if (Math.round(x) == 150 && y > 150) {
         return 'left';
     }
 
-    if (Math.round(x) == 0 && y < 150) {
-        console.log("Here");
+    if (Math.round(x) == 150 && y < 150) {
         return 'left';
     }
 
+    if (x > 150 && y > 150) {
+        return 'left';
+    }
 
     if (x > 150 && y < 150) {
-        console.log("Here");
         return 'left';
     }
     
     if (x < 150 && y < 150) {
-        console.log("Here");
         return 'right';
     }
 
     if (x < 150 && y > 150) {
-        console.log("Here");
         return 'right';
     }
-
-
-
 }
 
 function calcTextBaseLine(x,y) {
 
-    if (Math.round(x) == 0 && y > 150) {
-        console.log("Here");
-        return 'bottom';
-    }
-
-    if (Math.round(x) == 0 && y < 150) {
-        console.log("Here");
+    if (Math.round(x) == 150 && y > 150) {
         return 'top';
     }
 
+    if (Math.round(x) == 150 && y < 150) {
+        return 'bottom';
+    }
+
     if (x > 150 && y > 150) {
-        console.log("Here");
         return 'middle';
     }
 
-
     if (x > 150 && y < 150) {
-        console.log("Here");
         return 'middle';
     }
     
     if (x < 150 && y < 150) {
-        console.log("Here");
-        return 'right';
+        return 'middle';
     }
 
     if (x < 150 && y > 150) {
-        console.log("Here");
-        return 'right';
+        return 'middle';
     }
 
 }
+
+
+function adjustment(x,y) {
+
+    if (Math.round(x) == 150 && y > 150) {
+        console.log("top");
+        return -7;
+    }
+
+    if (Math.round(x) == 150 && y < 150) {
+        console.log("bot");
+        return -7;
+    }
+
+    return 0;
+
+}
+
+
 
 
 
@@ -149,6 +154,9 @@ function calcTextBaseLine(x,y) {
 function drawBonds(ctx, cx, cy, bondLength, substituents, rotation, isFront = false, isDashed = false, isBack = false, substituentOffset = 10, fontSize = '16px', circleRadius = 50, hideBehindCircle = false, positionKey = 'front') {
     // Define base angles for 120-degree separation
     const baseAngles = [0, 120, 240].map(angle => angle * Math.PI / 180);
+
+    console.log(rotation);
+    console.log(rotated);
 
     // Adjust angles based on whether they are front or back bonds
     const angles = isBack ? adjustBackAngles(rotation) : (isFront ? adjustFrontAngles() : baseAngles);
@@ -193,19 +201,24 @@ function drawBonds(ctx, cx, cy, bondLength, substituents, rotation, isFront = fa
         // Draw substituent at updated position
         //ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x, substituents[positionKey][i].y);
         
-        if (i==0 || i==1) {ctx.textAlign = 'left'; ctx.textBaseline = 'middle'};
-        if (i==2) {ctx.textAlign = 'right'; ctx.textBaseline = 'middle'};
+        //if (i==0 || i==1) {ctx.textAlign = 'left'; ctx.textBaseline = 'middle'};
         
-        if (i==0) {
-             ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x-7, substituents[positionKey][i].y);         
-        } else if (i==1) {
-            let fudge = 0;
-            if (positionKey == "back") {fudge = 4}
-            ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x-7, substituents[positionKey][i].y+fudge);    
         
-        } else if (i==2) {
-            ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x+7, substituents[positionKey][i].y);        
-        }
+        //if (i==2) {ctx.textAlign = 'right'; ctx.textBaseline = 'middle'};
+        
+        ctx.textAlign = calcTextAlign(xEnd, yEnd);
+        ctx.textBaseline = calcTextBaseLine(xEnd, yEnd);eclipsed_offset
+        
+        //if (i==0) {
+             //ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x, substituents[positionKey][i].y);         
+        //} else if (i==1) {
+            //let fudge = 0;
+            //if (positionKey == "back") {fudge = 4}
+            //ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x, substituents[positionKey][i].y);    
+        
+        //} else if (i==2) {
+            ctx.fillText(substituents[positionKey][i].label, substituents[positionKey][i].x + adjustment(xEnd,yEnd), substituents[positionKey][i].y);        
+        //}
         
         
         
@@ -296,18 +309,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get all input fields
     const inputFields = document.querySelectorAll('input[type="text"]');
     const confinputs = document.querySelectorAll('input[name="conformation"]');
-console.log(document.querySelector('input[name="conformation"]:checked').value);
     const colors = document.querySelectorAll('.color-input');
     const eclipsed_input = document.getElementById('eclipsed_offset');
 
     confinputs.forEach(function(input) {
         input.addEventListener('change', () => {
             console.log("Change");
+            conformation = document.querySelector('input[name="conformation"]:checked').value;
+            console.log(conformation);
+	    rotation = conformation === 'staggered' ? 60 : eclipsed_offset;
+	    //console.log(rotation);
+	    rotated = conformation === 'staggered' ? 1 : 0;
+	    //rotated=1;
             drawProjection();
         });
     });
 
-        colors.forEach(function(input) {
+    colors.forEach(function(input) {
            let hueb = new Huebee(input, {
              saturations: 1,
              setBGColor: true,
@@ -337,10 +355,19 @@ console.log(document.querySelector('input[name="conformation"]:checked').value);
             })
            
            
-        });
+    });
     
     eclipsed_input.addEventListener('change', () => {
-            drawProjection();
+            //conformation = document.querySelector('input[name="conformation"]:checked').value;
+            
+	    //rotation = conformation === 'staggered' ? 60 : eclipsed_offset;
+	    
+	    if (conformation == "eclipsed") {
+		    eclipsed_offset = Number(document.getElementById('eclipsed_offset').value);
+		    rotation = eclipsed_offset;
+		    console.log(rotation);
+		    drawProjection();
+            }
     });
 
     // Track which input field was last focused
@@ -430,9 +457,43 @@ function updateSubColors(color) {
 // Function to detect clicked substituent
 function rotate120() {
 
-    console.log("rotate");
+        rotated = rotated + 1;
+        conformation = document.querySelector('input[name="conformation"]:checked').value;
+        console.log(conformation);
+        console.log(rotation);
+	//rotation = conformation === 'staggered' ? 60 : eclipsed_offset;
+	
+	function isEven(n) {
+   		return n % 2 == 0;
+	}
+	
+	
+	if (conformation == 'staggered') {
+	
+		rotation = rotated*60;
+		if (isEven(rotation/60)) {
+			rotation = rotated*60 + eclipsed_offset;
+		}
+	
+	
+	//console.log(rotation);
+	} else {
+	
+                rotation = rotated*60;
+		if (isEven(rotation/60)) {
+			rotation = rotated*60+eclipsed_offset;
+		} else {
+		        rotation = rotated*60;
+		}
+	        //rotation = -rotated*60 - eclipsed_offset;
+	        	
+	}
+	console.log(rotated);
+	console.log(rotation);
+	
+        //drawProjection();
 
-drawProjection();
+	drawProjection();
 
 }
 
