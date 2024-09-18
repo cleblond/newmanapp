@@ -75,6 +75,76 @@ function drawProjection() {
     
 }
 
+
+function calcTextAlign(x,y) {
+    //1st quad
+    if (Math.round(x) == 0 && y > 150) {
+        console.log("Here");
+        return 'left';
+    }
+
+    if (Math.round(x) == 0 && y < 150) {
+        console.log("Here");
+        return 'left';
+    }
+
+
+    if (x > 150 && y < 150) {
+        console.log("Here");
+        return 'left';
+    }
+    
+    if (x < 150 && y < 150) {
+        console.log("Here");
+        return 'right';
+    }
+
+    if (x < 150 && y > 150) {
+        console.log("Here");
+        return 'right';
+    }
+
+
+
+}
+
+function calcTextBaseLine(x,y) {
+
+    if (Math.round(x) == 0 && y > 150) {
+        console.log("Here");
+        return 'bottom';
+    }
+
+    if (Math.round(x) == 0 && y < 150) {
+        console.log("Here");
+        return 'top';
+    }
+
+    if (x > 150 && y > 150) {
+        console.log("Here");
+        return 'middle';
+    }
+
+
+    if (x > 150 && y < 150) {
+        console.log("Here");
+        return 'middle';
+    }
+    
+    if (x < 150 && y < 150) {
+        console.log("Here");
+        return 'right';
+    }
+
+    if (x < 150 && y > 150) {
+        console.log("Here");
+        return 'right';
+    }
+
+}
+
+
+
 // Function to draw bonds and place substituents
 function drawBonds(ctx, cx, cy, bondLength, substituents, rotation, isFront = false, isDashed = false, isBack = false, substituentOffset = 10, fontSize = '16px', circleRadius = 50, hideBehindCircle = false, positionKey = 'front') {
     // Define base angles for 120-degree separation
@@ -352,6 +422,20 @@ function updateSubColors(color) {
 
 
 }
+
+
+
+
+
+// Function to detect clicked substituent
+function rotate120() {
+
+    console.log("rotate");
+
+drawProjection();
+
+}
+
 
 
 
