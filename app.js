@@ -4,8 +4,11 @@ const canvas = document.getElementById('projectionCanvas');
 // Dragging control
 let draggingSubstituent = null;
 let offsetX = 0, offsetY = 0;
+const bondLength = 1/5*canvas.width;
+console.log(bondLength);
 
 
+//ctx.scale(0.8, 0.8);
 let substituents = {
     front: [
         { label: document.getElementById('front1').value, x: 0, y: 0, dragging: false, dragged: false, color: document.getElementById('f1color').value},
@@ -42,12 +45,12 @@ function drawProjection() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Set center of projection
-    const centerX = 150;
-    const centerY = 150;
-    const bondLength = 60;
+    const centerX = canvas.width/2;
+    const centerY = canvas.height/2;
+    //const bondLength = 60;
     const substituentOffset = 5; // Offset to position substituents closer to the end
     const fontSize = '20px'; // Set font size
-    const circleRadius = 40;
+    const circleRadius = 2/15*canvas.width;
 
     // Draw back carbon circle with dashed line
     ctx.beginPath();
@@ -75,55 +78,65 @@ function calcTextAlign(x,y) {
     //1st quad
     
     //console.log(x,y);
+    const xmid = canvas.width/2;
+    const ymid = canvas.height/2
+console.log(xmid,ymid);
+
     
-    if (Math.round(x) == 150 && y > 150) {
+    if (Math.round(x) == xmid && y > ymid) {
         return 'left';
     }
 
-    if (Math.round(x) == 150 && y < 150) {
+    if (Math.round(x) == xmid && y < ymid) {
         return 'left';
     }
 
-    if (x > 150 && y > 150) {
+    if (x > xmid && y > ymid) {
         return 'left';
     }
 
-    if (x > 150 && y < 150) {
+    if (x > xmid && y < ymid) {
         return 'left';
     }
     
-    if (x < 150 && y < 150) {
+    if (x < xmid && y < ymid) {
         return 'right';
     }
 
-    if (x < 150 && y > 150) {
+    if (x < xmid && y > ymid) {
         return 'right';
     }
 }
 
 function calcTextBaseLine(x,y) {
 
-    if (Math.round(x) == 150 && y > 150) {
+    const xmid = canvas.width/2;
+    const ymid = canvas.height/2
+
+    
+
+
+    if (Math.round(x) == xmid && y > ymid) {
         return 'top';
     }
 
-    if (Math.round(x) == 150 && y < 150) {
+    if (Math.round(x) == xmid && y < ymid) {
         return 'bottom';
     }
 
-    if (x > 150 && y > 150) {
+    if (x > xmid && y > ymid) {
         return 'middle';
     }
 
-    if (x > 150 && y < 150) {
+    if (x > xmid && y < ymid) {
         return 'middle';
     }
     
-    if (x < 150 && y < 150) {
+    if (x < xmid && y < ymid) {
         return 'middle';
     }
 
-    if (x < 150 && y > 150) {
+    if (x < xmid && y > ymid) {
         return 'middle';
     }
 
@@ -132,12 +145,15 @@ function calcTextBaseLine(x,y) {
 
 function adjustment(x,y) {
 
-    if (Math.round(x) == 150 && y > 150) {
+    const xmid = canvas.width/2;
+    const ymid = canvas.height/2
+
+    if (Math.round(x) == xmid && y > ymid) {
         console.log("top");
         return -7;
     }
 
-    if (Math.round(x) == 150 && y < 150) {
+    if (Math.round(x) == xmid && y < ymid) {
         console.log("bot");
         return -7;
     }

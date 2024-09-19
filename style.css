@@ -10,8 +10,8 @@ text-align: center;
 
 input[type=text] {
     width: 5em;
+    text-align: center;
 }
-
 
 .container {
     width: 100%;
