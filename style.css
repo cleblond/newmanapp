@@ -57,3 +57,45 @@ label {
     background-color: #f0f0f0;
 }
 
+.substituents-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.substituents-table td,
+.substituents-table th {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.substituents-table th {
+  text-align: center;
+  background-color: #f2f2f2;
+}
+
+.color-input {
+  width: 60px;
+  margin-left: 5px;
+}
+
+.canvas-wrapper {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.substituents-column {
+    flex: 1;
+}
+
+.canvas-column {
+    flex: 1;
+    margin-left: 20px; /* Add margin between columns */
+}
+.newman-canvas-column {
+    flex: 1;
+    margin-left: 30px; /* Add margin between columns */
+}
+
+
+

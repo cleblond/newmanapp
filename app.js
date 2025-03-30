@@ -323,7 +323,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get all input fields
     const inputFields = document.querySelectorAll('input[type="text"]');
     const confinputs = document.querySelectorAll('input[name="conformation"]');
-    const colors = document.querySelectorAll('.color-input');
+    const colors = document.querySelectorAll('.newman-color-input');
     const eclipsed_input = document.getElementById('eclipsed_offset');
 
     confinputs.forEach(function(input) {
