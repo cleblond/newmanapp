@@ -351,10 +351,20 @@ document.addEventListener('DOMContentLoaded', () => {
            
             hueb.on( 'change', function(color, hue, sat, lum ) {
               
-              let labelid = document.getElementById(hueb.anchor.id).previousSibling.id;
-              
-              let subid = labelid.slice(-1);
-                            
+              //let labelid = document.getElementById(hueb.anchor.id).previousSibling.id;
+              let colorInputId = hueb.anchor.id; // Get the Huebee color input ID
+
+              //let subid = labelid.slice(-1);
+              let subid = colorInputId.slice(1, 2);        
+	
+              if (colorInputId.startsWith("f")) {
+                    substituents['front'][subid - 1].color = color;
+              } else if (colorInputId.startsWith("b")) {
+                    substituents['back'][subid - 1].color = color;
+              }  
+
+
+	      /*
               if (labelid.substring(0, 1) == "f") {
               
                 substituents['front'][subid -1].color = color;
@@ -363,6 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 substituents['back'][subid -1].color = color;
               
               }
+	      */
               drawProjection();
               
               hueb.close();
